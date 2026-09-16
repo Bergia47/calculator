@@ -12,14 +12,32 @@ namespace Calculator
 {
     public partial class frmMain : Form
     {
-        private char[,] buttuns =
+        static private Color OPERATION_BG = Color.LightGray;
+        static private Color NUMBER_BG = Color.WhiteSmoke;
+        static private Color EQUAL_BG = Color.DeepSkyBlue;
+        public struct ButtonStr
         {
-            {'%','\u0152','C','\u232b' },
-            {'\u215f','\u00b2','\u221A','\u00f7' },
-            {'7','8','9','\u00D7' },
-            {'4','5','6','-' },
-            {'1','2','3','+' },
-            {'\u00b1','0',',','=' },
+            public char content;
+            public Color BgColor;
+            public ButtonStr(char content, Color BgColor)
+            {
+                this.content = content;
+                this.BgColor = BgColor;
+            }
+            public override string ToString()
+            {
+                return content.ToString();
+            }
+        }
+
+        private ButtonStr[,] buttuns =
+        {
+            {new ButtonStr('%', OPERATION_BG),new ButtonStr('\u0152', OPERATION_BG),new ButtonStr('C', OPERATION_BG),new ButtonStr('\u232b', OPERATION_BG) },
+            {new ButtonStr('\u215f', OPERATION_BG),      new ButtonStr('\u00b2', OPERATION_BG),new ButtonStr('\u221A', OPERATION_BG),new ButtonStr('\u00f7', OPERATION_BG) },
+            {new ButtonStr('7', NUMBER_BG),new ButtonStr('8', NUMBER_BG),new ButtonStr('9', NUMBER_BG),new ButtonStr('\u00D7', OPERATION_BG) },
+            {new ButtonStr('4', NUMBER_BG),new ButtonStr('5', NUMBER_BG),new ButtonStr('6', NUMBER_BG),new ButtonStr('-', OPERATION_BG) },
+            {new ButtonStr('1', NUMBER_BG),new ButtonStr('2', NUMBER_BG),new ButtonStr('3', NUMBER_BG),   new ButtonStr('+', OPERATION_BG)     },
+            {new ButtonStr('\u00b1', NUMBER_BG),new ButtonStr('0', NUMBER_BG),new ButtonStr(',', NUMBER_BG),new ButtonStr('=', EQUAL_BG) },
         };
         public frmMain()
         {
@@ -34,7 +52,7 @@ namespace Calculator
         private void MakeButtuns()
         {
             int btnWidth = 80, btnHeight= 60;
-            int posY = 106;
+            int posY = 174;
             for (int i = 0; i < buttuns.GetLength(0); i++) {
                 int posX = 0;
                 for (int j = 0; j < buttuns.GetLength(1); j++)
@@ -46,6 +64,7 @@ namespace Calculator
                     btn.Left=posX;
                     btn.Font = new Font("segoe UI", 16);
                     btn.Text=buttuns[i,j].ToString();
+                    btn.BackColor = buttuns[i, j].BgColor;
                     Controls.Add(btn);
                     posX += 80;
                 }
