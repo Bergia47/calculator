@@ -12,6 +12,7 @@ namespace Calculator
 {
     public partial class frmMain : Form
     {
+        private Label resutlLabel;
         static private Color OPERATION_BG = Color.LightGray;
         static private Color NUMBER_BG = Color.WhiteSmoke;
         static private Color EQUAL_BG = Color.DeepSkyBlue;
@@ -33,10 +34,10 @@ namespace Calculator
         private ButtonStr[,] buttuns =
         {
             {new ButtonStr('%', OPERATION_BG),new ButtonStr('\u0152', OPERATION_BG),new ButtonStr('C', OPERATION_BG),new ButtonStr('\u232b', OPERATION_BG) },
-            {new ButtonStr('\u215f', OPERATION_BG),      new ButtonStr('\u00b2', OPERATION_BG),new ButtonStr('\u221A', OPERATION_BG),new ButtonStr('\u00f7', OPERATION_BG) },
+            {new ButtonStr('\u215f', OPERATION_BG),new ButtonStr('\u00b2', OPERATION_BG),new ButtonStr('\u221A', OPERATION_BG),new ButtonStr('\u00f7', OPERATION_BG) },
             {new ButtonStr('7', NUMBER_BG),new ButtonStr('8', NUMBER_BG),new ButtonStr('9', NUMBER_BG),new ButtonStr('\u00D7', OPERATION_BG) },
             {new ButtonStr('4', NUMBER_BG),new ButtonStr('5', NUMBER_BG),new ButtonStr('6', NUMBER_BG),new ButtonStr('-', OPERATION_BG) },
-            {new ButtonStr('1', NUMBER_BG),new ButtonStr('2', NUMBER_BG),new ButtonStr('3', NUMBER_BG),   new ButtonStr('+', OPERATION_BG)     },
+            {new ButtonStr('1', NUMBER_BG),new ButtonStr('2', NUMBER_BG),new ButtonStr('3', NUMBER_BG),new ButtonStr('+', OPERATION_BG)     },
             {new ButtonStr('\u00b1', NUMBER_BG),new ButtonStr('0', NUMBER_BG),new ButtonStr(',', NUMBER_BG),new ButtonStr('=', EQUAL_BG) },
         };
         public frmMain()
@@ -47,6 +48,21 @@ namespace Calculator
         private void frmMain_Load(object sender, EventArgs e)
         {
             MakeButtuns();
+            MakeLabel();
+        }
+
+        private void MakeLabel()
+        {
+            resutlLabel = new Label()
+            {
+                Font = new Font("Segoe UI", 22, FontStyle.Strikeout),
+                TextAlign = ContentAlignment.MiddleRight,
+                AutoSize = false,
+                Location = new Point(0, 45),
+                Size = new Size(this.Width, 100),
+                BackColor= Color.Red
+            };
+            Controls.Add(resutlLabel);
         }
 
         private void MakeButtuns()
@@ -65,11 +81,17 @@ namespace Calculator
                     btn.Font = new Font("segoe UI", 16);
                     btn.Text=buttuns[i,j].ToString();
                     btn.BackColor = buttuns[i, j].BgColor;
+                    btn.Click += Btn_Click;
                     Controls.Add(btn);
                     posX += 80;
                 }
                 posY += 60;
             }
+        }
+
+        private void Btn_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
